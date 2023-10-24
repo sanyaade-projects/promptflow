@@ -135,6 +135,21 @@ class ValueType(str, Enum):
         # TODO: parse other types
         return v
 
+    def get_class(self):
+        if self == ValueType.INT:
+            return int
+        if self == ValueType.DOUBLE:
+            return float
+        if self == ValueType.BOOL:
+            return bool
+        if self == ValueType.STRING:
+            return str
+        if self == ValueType.LIST:
+            return list
+        if self == ValueType.OBJECT:
+            return dict
+        return None
+
 
 class ConnectionType:
     """This class provides methods to interact with connection types."""

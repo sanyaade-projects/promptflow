@@ -12,8 +12,8 @@ from typing import Any, Dict, List, Optional
 import yaml
 
 from promptflow.exceptions import ErrorTarget
-from .._sdk._constants import DEFAULT_ENCODING
 
+from .._sdk._constants import DEFAULT_ENCODING
 from .._utils.dataclass_serializer import serialize
 from .._utils.utils import try_import
 from ._errors import FailedToImportModule, NodeConditionConflict
@@ -523,9 +523,11 @@ class Flow:
     def from_yaml(flow_file: Path, working_dir=None) -> "Flow":
         """Load flow from yaml file."""
         working_dir = Flow._resolve_working_dir(flow_file, working_dir)
-        with open(working_dir / flow_file, "r", encoding=DEFAULT_ENCODING) as fin:
-            flow = Flow.deserialize(yaml.safe_load(fin))
-            flow._set_tool_loader(working_dir)
+        flow_file_path = working_dir / flow_file
+        loaded_from_yaml = yaml.safe_load(flow_file_path.read_text(encoding=DEFAULT_ENCODING))
+        flow = Flow.deserialize(loaded_from_yaml)
+        logger.info(f"content loaded from file is {loaded_from_yaml}")
+        flow._set_tool_loader(working_dir)
         return flow
 
     def _set_tool_loader(self, working_dir):

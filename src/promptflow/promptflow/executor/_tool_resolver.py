@@ -112,7 +112,10 @@ class ToolResolver:
                     # We don't covert flow input/ node reference type by tool definition.
                     # So, don't have reason to convert literal node input type.
                     if not isinstance(updated_inputs[k].value, value_type.get_class()):
-                        logger.warning(f"Literal node input {k} is not type {value_type}, received type is {type(v)}.")
+                        logger.warning(
+                            f"Literal node input {k} is not type {value_type}, received type is"
+                            f" {type(updated_inputs[k].value)}."
+                        )
                     updated_inputs[k].value = load_multimedia_data_recursively(updated_inputs[k].value)
                 except Exception as e:
                     msg = f"Input '{k}' for node '{node.name}' of value {v.value} is not type {value_type}."

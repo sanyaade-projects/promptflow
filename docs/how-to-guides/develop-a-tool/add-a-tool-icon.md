@@ -20,7 +20,8 @@ Adding a custom tool icon is optional. If you do not provide one, the system use
   pip install pillow
   ```
 
-## Add tool icon with _icon_ parameter 
+## Add tool icon using command
+### Add a tool icon regardless light or dark mode  
 Run the command below in your tool project directory to automatically generate your tool YAML, use _-i_ or _--icon_ parameter to add a custom tool icon:
 ```
 python <path-to-scripts>\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> -i <tool-icon-path>
@@ -37,6 +38,37 @@ In the auto-generated tool YAML file, the custom tool icon data URI is added in 
 my_tool_package.tools.my_tool_1.my_tool:
   function: my_tool
   icon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACR0lEQVR4nKWS3UuTcRTHP79nm9ujM+fccqFGI5viRRpjJgkJ3hiCENVN/QMWdBHUVRdBNwX9ARHd2FVEWFLRjaS9XPmSC/EFTNOWc3Pi48y9PHNzz68L7UXTCvreHM65+PA953uElFLyHzLvHMwsJrnzfJqFeAan3cKV9mr8XseeAOXX5vqjSS53jdF+tIz1nIFAMDCzwpvJ5b87+LSYYHw+gcWkEAwluXnOR2Q1R+9YjJ7BKJG4zoXmqr0ddL3+QnV5EeUOK821LsJammcjEeZiafJScrd3bm8H6zkDd4mVztZKAK49/Mj8is4Z/35GPq9R5VJ5GYztDtB1HT1vovGQSiqVAqDugI3I6jpP3i9x9VQVfu8+1N/OvbWCqqqoBSa6h1fQNA1N0xiYTWJSBCZF8HgwSjQapbRQ2RUg5NYj3O6ZochmYkFL03S4mImIzjFvCf2xS5gtCRYXWvBUvKXjyEVeTN/DXuDgxsnuzSMK4HTAw1Q0hZba4NXEKp0tbpq9VkxCwTAETrsVwxBIBIYhMPI7YqyrtONQzSznJXrO4H5/GJ9LUGg0YFYydJxoYnwpj1s9SEN5KzZz4fYYAW6dr+VsowdFgamlPE/Hs8SzQZYzg0S+zjIc6iOWDDEc6uND+N12B9/VVu+mrd79o38wFCCdTeBSK6hxBii1eahxBlAtRbsDdmoiHGRNj1NZ7GM0NISvzM9oaIhiqwOO/wMgl4FsRpLf2KxGXpLNSLLInzH+CWBIA6RECIGUEiEUpDRACBSh8A3pXfGWdXfMgAAAAABJRU5ErkJggg==
+  inputs:
+    connection:
+      type:
+      - CustomConnection
+    input_text:
+      type:
+      - string
+  module: my_tool_package.tools.my_tool_1
+  name: my_tool
+  type: python
+```
+
+### Add tool icons for light and dark mode respectively
+Run the command below in your tool project directory to automatically generate your tool YAML, use _--icon-light_ to add a custom tool icon in the light mode and use _--icon-dark_ to add a custom tool icon in the dark mode:
+```
+python <path-to-scripts>\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> --icon-light <light-tool-icon-path> --icon-dark <dark-tool-icon-path>
+```
+Here we use [an existing tool project](https://github.com/microsoft/promptflow/tree/main/examples/tools/tool-package-quickstart) as an example.
+```
+cd D:\proj\github\promptflow\examples\tools\tool-package-quickstart
+
+python D:\proj\github\promptflow\scripts\tool\generate_package_tool_meta.py -m my_tool_package.tools.my_tool_1 -o my_tool_package\yamls\my_tool_1.yaml --icon-light my_tool_package\icons\custom-tool-icon-light.png --icon-dark my_tool_package\icons\custom-tool-icon-dark.png
+```
+
+In the auto-generated tool YAML file, the light and dark custom tool icon data URIs are added in the `icon` field:
+```yaml
+my_tool_package.tools.my_tool_1.my_tool:
+  function: my_tool
+  icon:
+    dark: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAB00lEQVR4nI1SO2iTURT+7iNNb16a+Cg6iJWqRKwVRIrWV6GVUkrFdqiVShBaxIIi4iY4iouDoy4ODkKn4uQkDs5FfEzFYjEtJYQo5P/z35j/3uNw7Z80iHqHC/ec8z3OuQeMMcYYAHenU8n84YMAABw7mo93dEQpAIyBAyAiF1Kq8/Wrl5fHR1x6tjC9uPBcSrlZD4BxIgIgBCei+bnC6cGxSuWHEEIIUa58H7l0dWZqwlqSUjhq7oDWEoAL584Y6ymljDHGmM543BhvaPAsAKLfEjIyB6BeryPw796+EWidUInr16b5z6rWAYCmKXeEEADGRy+SLgXlFfLWbbWoyytULZ4f6Hee2yDgnAG4OVsoff20try08eX92vLSzJVJAJw3q7dISSnDMFx48UypeCa97cPHz7fu3Y/FYo1Go8nbCiAiIUStVus/eaKvN691IAQnsltI24wZY9Kp1Ju373K5bDKZNMa6gf5ZIWrG9/0g0K3W/wYIw3Dvnq6dO7KNMPwvgOf5x3uPHOrp9n3/HwBrLYCu3bv6Tg0PjU0d2L8PAEWfDKCtac6YIVrfKN2Zn8tkUqvfigBaR88Ya66uezMgl93+9Mmjxw8fJBIqWv7NAvwCHeuq7gEPU/QAAAAASUVORK5CYII=
+    light: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAB2UlEQVR4nH1SO2hUQRQ9c18K33u72cXs7jOL8UeQCCJoJaIgKAiCWKilaGNlYREFDRGNjayVWKiFFmITECFKJKIokQRRsDFENoooUchHU5qdWZ2512KymxcNOcUwc5nDuefeA2FhZpGFU0S0Mf5S0zpdF2FhISgopUREKfXj59yhoycmPn4GAKDncuXa9VtKKWYGACgowHOdc9a6g0eOA7mx8apzzlp76vRZoGXw6XMRsdb6nwSAmYnoQ3Xi5fBIdk2SiSMiCoKgNZslteruvX4ASikvSwAEAGDqdYhAXO+VypevkwODQ4+HnlGcq2mDNLwtZq5pvWP3AYRJ0Lq2uG5rWNgYFjaBVt+8c19E/jRaWvQgImPj1e279ufaN8elzly5K1/u6r7QZ51zrjmoBqHJ+TU/39ax5cy5i53bdnb39KXtLpr28OMLgiCfz78YHpmemi0W2piZWdIWaMmDCIDWet/ePUlS0toQUWM8yxG8jrVuw/qOTBw19rUiQUQoCGZm50z9txf8By3/K0Rh+PDRk8lv3+MoWklBBACmpmdKxcKn96O3b1SqC6FSyxOUgohk4pjZ9T8YeDX6ptye+PoSpNIrfkGv3747fOzk+UtXjTE+BM14M8tfl7BQR9VzUXEAAAAASUVORK5CYII=
   inputs:
     connection:
       type:

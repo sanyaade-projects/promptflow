@@ -1,5 +1,5 @@
 # Adding a Tool Icon
-A tool icon serves as a graphical representation of your tool in the user interface (UI). Follow this guidance to add a custom tool icon when developing your own tool package.
+A tool icon serves as a graphical representation of your tool in the user interface (UI). This document offers guidance on integrating a tool icon when developing your own tool package. It offers instructions on how to add a single icon that seamlessly adapts to both dark and light modes. Additionally, the document also provides detailed steps on how to add distinct icons for dark and light modes separately.
 
 Adding a custom tool icon is optional. If you do not provide one, the system uses a default icon.
 
@@ -7,7 +7,7 @@ Adding a custom tool icon is optional. If you do not provide one, the system use
 
 - Please ensure that your [Prompt flow for VS Code](https://marketplace.visualstudio.com/items?itemName=prompt-flow.prompt-flow) is updated to version 1.0.10 or a more recent version.
 - Create a tool package as described in [Create and Use Tool Package](create-and-use-tool-package.md).
-- Prepare custom icon image that meets these requirements:
+- Prepare custom icon images that meet these requirements:
 
   - Use PNG, JPG or BMP format.
   - 16x16 pixels to prevent distortion when resizing.
@@ -24,7 +24,7 @@ Adding a custom tool icon is optional. If you do not provide one, the system use
 ### Add a tool icon regardless light or dark mode  
 Run the command below in your tool project directory to automatically generate your tool YAML, use _-i_ or _--icon_ parameter to add a custom tool icon:
 ```
-python <path-to-scripts>\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> -i <tool-icon-path>
+python <promptflow github repo>\scripts\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> -i <tool-icon-path>
 ```
 Here we use [an existing tool project](https://github.com/microsoft/promptflow/tree/main/examples/tools/tool-package-quickstart) as an example.
 ```
@@ -53,7 +53,7 @@ my_tool_package.tools.my_tool_1.my_tool:
 ### Add tool icons for light and dark mode respectively
 Run the command below in your tool project directory to automatically generate your tool YAML, use _--icon-light_ to add a custom tool icon in the light mode and use _--icon-dark_ to add a custom tool icon in the dark mode:
 ```
-python <path-to-scripts>\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> --icon-light <light-tool-icon-path> --icon-dark <dark-tool-icon-path>
+python <promptflow github repo>\scripts\tool\generate_package_tool_meta.py -m <tool_module> -o <tool_yaml_path> --icon-light <light-tool-icon-path> --icon-dark <dark-tool-icon-path>
 ```
 Here we use [an existing tool project](https://github.com/microsoft/promptflow/tree/main/examples/tools/tool-package-quickstart) as an example.
 ```
@@ -80,6 +80,7 @@ my_tool_package.tools.my_tool_1.my_tool:
   name: my_tool
   type: python
 ```
+Note: If you specify only a light icon without a dark icon, the defined icon will be used in light mode, while the system default icon will be used in dark mode. Similarly, if only a dark icon is specified, the defined icon will be used in dark mode, and the system default icon will be used in light mode.
 
 ## Verify the tool icon in VS Code extension
 Follow [steps](create-and-use-tool-package.md#use-your-tool-from-vscode-extension) to use your tool from VS Code extension. Your tool displays with the custom icon:  
@@ -89,7 +90,7 @@ Follow [steps](create-and-use-tool-package.md#use-your-tool-from-vscode-extensio
 ### Can I preview the tool icon image before adding it to a tool?
 Yes, you could run below command under the root folder to generate a data URI for your custom tool icon. Make sure the output file has an `.html` extension.
 ```
-python <path-to-scripts>\tool\convert_image_to_data_url.py --image-path <image_input_path> -o <html_output_path>
+python <promptflow github repo>\scripts\tool\convert_image_to_data_url.py --image-path <image_input_path> -o <html_output_path>
 ```
 For example:
 ```

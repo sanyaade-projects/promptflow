@@ -23,6 +23,8 @@ from promptflow.contracts.run_info import Status
 from promptflow.exceptions import UserErrorException
 from promptflow.storage._run_storage import DefaultRunStorage
 
+# from promptflow.executor.flow_executor import FlowExecutor
+from ._flow_executor_csharp import FlowExecutorCSharp as FlowExecutor
 from .utils import SubmitterHelper, variant_overwrite_context
 
 logger = logging.getLogger(LOGGER_NAME)
@@ -158,7 +160,6 @@ class TestSubmitter:
         stream_output: bool = True,
     ):
         from promptflow._constants import LINE_NUMBER_KEY
-        from promptflow.executor.flow_executor import FlowExecutor
 
         if not connections:
             connections = SubmitterHelper.resolve_connections(flow=self.flow, client=self._client)
@@ -206,8 +207,6 @@ class TestSubmitter:
         environment_variables: dict = None,
         stream: bool = True,
     ):
-        from promptflow.executor import FlowExecutor
-
         connections = SubmitterHelper.resolve_connections(flow=self.flow, client=self._client)
         credential_list = ConnectionManager(connections).get_secret_list()
 

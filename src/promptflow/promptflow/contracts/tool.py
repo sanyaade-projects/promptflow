@@ -232,6 +232,7 @@ class ToolType(str, Enum):
     PROMPT = "prompt"
     _ACTION = "action"
     CUSTOM_LLM = "custom_llm"
+    _CSHARP = "csharp"
 
 
 @dataclass
